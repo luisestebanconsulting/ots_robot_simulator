@@ -1,0 +1,583 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!file.README.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><h1>(Off-The-Shelf) Toy Robot Simulator</h1>
+
+<p><em>Software Engineering Presentation</em></p>
+
+<blockquote>
+<p>This is a software engineering project presenting various software engineering processes and concepts
+that would be applied to a large project, even though the project is small.  </p>
+
+<p>This project is an alternate version of the <a href="https://github.com/luisestebanconsulting/toy_robot_simulator">Toy Robot Simulator</a>.
+The original version was developed as a pure Ruby project (using minimal libraries).
+This version uses libraries where feasible (effectively using maximal libraries).</p>
+
+<p>Further, this version also includes some potential and predictable client requests; such as:</p>
+
+<ul>
+<li>different sized tables with negative coordinates,</li>
+<li>a toy box containing spare robots (if one happens to fall off the table),</li>
+<li>a maze (to provide something more interesting than a table).</li>
+</ul>
+
+<p>The approach is a simulated agile approach.  This is done by simulating a trickle of new requirements by
+segmenting the brief.  A test/behaviour driven development approach is taken.  The project is broken up
+so that multiple developers can work simultaneously.  </p>
+
+<p>Although the techniques applied here may be excessive for a small project, small projects can easily become
+large projects.  The techniques of Object Oriented Design and Parsing are applied to allow for significant
+expansion.</p>
+</blockquote>
+
+<h2>Introduction</h2>
+
+<p>This project consists of an application and library.  The project simulates the control of a simple robot on a simple desktop.
+The application allows users to use software; while the library allows developers to use the software in another project.</p>
+
+<h2>Download</h2>
+
+<p>You can download the project using Git, or you can download a Zip file directly from the GitHub page.
+Using Git has the advantage that you can keep up with further development of the project, and perhaps
+even contribute to the project.</p>
+
+<h3>Using Git</h3>
+
+<p>To download using Git, you will need to have Git installed.
+If you do not have Git, go to the <a href="http://git-scm.com/downloads">Git download page</a>.</p>
+
+<p>Then download using the Git clone command.</p>
+
+<pre class="code Bash"><code class="Bash">$ git clone https://github.com/luisestebanconsulting/ots_robot_simulator.git
+$ cd ots_robot_simulator
+</code></pre>
+
+<h3>Using Zip</h3>
+
+<ol>
+<li>Download the Zip file from GitHub (<a href="https://github.com/luisestebanconsulting/ots_robot_simulator">https://github.com/luisestebanconsulting/ots_robot_simulator</a>).</li>
+<li>Unzip into a desired directory.</li>
+</ol>
+
+<h2>Requirements and Dependencies</h2>
+
+<p>This project assumes that you have <a href="https://www.ruby-lang.org/en/">Ruby</a> (&gt;=2.0) installed.</p>
+
+<h3>Gems</h3>
+
+<p>The following gems are used:</p>
+
+<ul>
+<li>Bundler</li>
+<li>Rexical</li>
+<li>Racc</li>
+<li>Mocha</li>
+<li>Yard</li>
+</ul>
+
+<h3>Standard Libraries</h3>
+
+<p>The following standard libraries are used:</p>
+
+<ul>
+<li>Logger</li>
+<li>OptionParser</li>
+<li>Minitest</li>
+<li>ReadLine</li>
+<li>Matrix (via mathn)</li>
+</ul>
+
+<h2>Installation</h2>
+
+<p>The Toy Robot Simulator project does not require any system installation to run.</p>
+
+<p>If you are planning to use the library for other projects, you can manually install
+the library into your project.  In the future, this project will be available as a gem,
+so that you can simply do:</p>
+
+<pre class="code Ruby"><code class="Ruby">require &#39;robot_simulator&#39;
+</code></pre>
+
+<p>Otherwise, the project can be installed by:</p>
+
+<pre class="code Ruby"><code class="Ruby">rake install              # To install the project and library
+rake install_library      # To install just the library
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>There are two ways to use this project: as a standalone application, and as a library.</p>
+
+<h3>Rake Usage</h3>
+
+<p>The are a number of Rake tasks available, see:</p>
+
+<pre class="code Ruby"><code class="Ruby">rake -T
+</code></pre>
+
+<h3>Shell Command Usage</h3>
+
+<p>Use the shell of the operating system to change directory to the top level of the project directory.
+Alternatively, you can modify the <code>PATH</code> to include the project directory, such as:</p>
+
+<pre class="code Bash"><code class="Bash">export PATH=$PATH:/home/luis/projects/ots_robot_simulator/bin
+</code></pre>
+
+<p>If the operating system supports executable files (specifically executable Ruby scripts), then you can launch
+a robot using the command <code>robot_simulator</code>; otherwise, you will need to launch it with Ruby, <code>ruby robot_simulator</code>.
+Many default operating system setups do not include the current directory in PATH for executable files.  This can
+be remedied in two ways:</p>
+
+<ul>
+<li>Use a relative path to launch the application,</li>
+<li>Modify the PATH to include the current directory (on shared computers this could be a security issue).</li>
+</ul>
+
+<p>Use a relative path, such as:</p>
+
+<pre class="code Bash"><code class="Bash">/home/luis/projects/robot_simulator/Application/bin$ ./robot_simulator -h
+</code></pre>
+
+<p>Modify the PATH to include the current directory, such as:</p>
+
+<pre class="code Bash"><code class="Bash">export PATH=$PATH:.
+</code></pre>
+
+<h4>Synopsis</h4>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_robot_simulator'>robot_simulator</span>                   <span class='comment'># Interactive command input
+</span><span class='id identifier rubyid_robot_simulator'>robot_simulator</span> <span class='op'>-</span><span class='id identifier rubyid_h'>h</span>                <span class='comment'># Output usage
+</span><span class='id identifier rubyid_robot_simulator'>robot_simulator</span> <span class='id identifier rubyid_cmdfile'>cmdfile</span>           <span class='comment'># Non-interactive command input (commands read from cmdfile)
+</span><span class='id identifier rubyid_cat'>cat</span> <span class='id identifier rubyid_cmdfile'>cmdfile</span> <span class='op'>|</span> <span class='id identifier rubyid_robot_simulator'>robot_simulator</span>     <span class='comment'># Non-interactive command input (commands read from stdin)
+</span></code></pre>
+
+<p>The first usage, without arguments, is an interactive mode where the user types commands interactively with the simulator; unless
+input comes from the output of another process.
+The <code>-h</code> flag requests command line usage.
+When a file argument is used, simulator commands are read from the file.  Only in the interactive mode is the <code>QUIT</code> command available
+which terminates the program; otherwise, the program terminates at the end of the file.</p>
+
+<h4>Linux</h4>
+
+<pre class="code Bash"><code class="Bash">$ cd bin
+$ robot_simulator [-h] [cmdfile]
+</code></pre>
+
+<h4>Mac OS X</h4>
+
+<pre class="code Bash"><code class="Bash">$ cd bin
+$ robot_simulator [-h] [cmdfile]
+</code></pre>
+
+<h4>Windows</h4>
+
+<pre class="code DOS"><code class="DOS">C:&gt; cd bin
+C:&gt; robot_simulator.bat [-h] [cmdfile]
+</code></pre>
+
+<h3>Robot Command Language</h3>
+
+<p>Commands are issued to the simulator according to the following railroad diagram.</p>
+
+<p><img src="./doc/CommandLanguageSyntax.png" alt="Syntax Diagram"></p>
+
+<p><img src="./CommandLanguageSyntax.png" alt="Syntax Diagram"></p>
+
+<p>Note, the <code>QUIT</code> command is available in interactive mode only.</p>
+
+<h3>Library Usage</h3>
+
+<p>To include the entire library,</p>
+
+<pre class="code Ruby"><code class="Ruby">require &#39;robot_simulator&#39;
+</code></pre>
+
+<p>See <a href="./index.html">/doc</a> for the full documentation.</p>
+
+<p>The following classes are available:</p>
+
+<p><img src="./doc/yard_graph.png" alt="Class Hierarchy Diagram"></p>
+
+<p><img src="./yard_graph.png" alt="Class Hierarchy Diagram"></p>
+
+<ul>
+<li><em>Simulator</em>: creates the objects and runs the simulation</li>
+<li><em>Logger</em>: logs messages for debugging</li>
+<li><em>Parser</em>: a generic command line parser</li>
+<li><em>Entity</em>: an object to be simulated
+
+<ul>
+<li><em>Container</em>: an entity which contains entities</li>
+<li><em>Environment</em>: a container which contains entities at specific locations
+
+<ul>
+<li><em>Table</em>: an environment which contains entities at specific bounded locations</li>
+</ul></li>
+<li><em>Robot</em>: an entity which moves on a table</li>
+</ul></li>
+</ul>
+
+<h4>Simulator</h4>
+
+<p>A Simulator gathers together various objects and sends commands to them.
+The Simulator class in <code>toy_robot_simulator</code> is not a generic simulator,
+but rather specifically created for the toy robot simulation.</p>
+
+<p>It expects the command line arguments to be passed to it, but defaults
+will be used if they are omitted.</p>
+
+<p>The defaults are:</p>
+
+<ul>
+<li>stdin is used for robot command input.</li>
+</ul>
+
+<p>Unless input comes from a pipe, a prompt is issued for each command and errors
+are sent to stderr; otherwise errors are sent to a log file (<code>robot_simulator.log</code>).</p>
+
+<pre class="code Ruby"><code class="Ruby">simulator = Simulator.new
+simulator = Simulator.new ARGV
+</code></pre>
+
+<h4>Logger</h4>
+
+<p>A Logger sends log messages to a file or stream, such as $stderr.</p>
+
+<pre class="code Ruby"><code class="Ruby">logger = Logger.new
+logger = Logger.new log_to: &#39;my_log&#39;
+
+logger.puts &quot;my message&quot;      # Send the to message to the log output.
+logger.delete_log             # If the log is a file and exists, it will be deleted.
+</code></pre>
+
+<h4>Parser</h4>
+
+<p>A Parser reads lines of text from a file or stream, such as $stdin, and translates
+the lines into object oriented messages to a target object.  A Parser is initialised
+with a Hash of options.</p>
+
+<ul>
+<li> <code>:input</code>          - The file to parse (could be stdin)</li>
+<li> <code>:prompt</code>         - The prompt to use if stdin is interactive</li>
+<li> <code>:errors</code>         - Errors are sent to this stream if not nil</li>
+<li> <code>:rules</code>          - A Hash of RegExps and conversions (see below)</li>
+<li> <code>:target</code>         - The object to which messages from matching rules are sent</li>
+<li> <code>:stop_on_error</code>  - A Boolean indicating to stop parsing when a rule is not matched</li>
+<li> <code>:default</code>        - An action for unmatched input</li>
+<li> <code>:start</code>          - A Boolean indicating to start parsing immediately on creation</li>
+</ul>
+
+<p>The options have the following defaults:</p>
+
+<ul>
+<li><code>input:          STDIN</code>    Default to input coming from stdin</li>
+<li><code>prompt:         &#39;&gt; &#39;</code>    If input is stdin and not piped, this is the prompt</li>
+<li><code>errors:         nil</code>    Errors are not output</li>
+<li><code>rules:          { /.*/ =&gt; true }</code>    Which means everyline is matched and thus sent to the target as a method</li>
+<li><code>target:         self</code>    Really only useful for subclasses with specific methods</li>
+<li><code>stop_on_error:  false</code>    Do not stop on errors (i.e. when no rules match input)</li>
+<li><code>default:        nil</code>    No default action</li>
+<li><code>start:          nil</code>    Don&#39;t start on creation</li>
+</ul>
+
+<p>If <code>:input</code> or <code>:errors</code> are strings, then a file is opened for reading input or writing errors.</p>
+
+<p><code>:rules</code> should be a Hash in the form RegExp =&gt; action, e.g.:</p>
+
+<pre class="code Ruby"><code class="Ruby">  {
+    /f\((\d+),(\d+)\)/  =&gt;  [:func_f,:to_i,:to_i],
+    /EVENT (.+)/        =&gt;  [:send_event,[:downcase,:to_sym]],
+    /QUIT/              =&gt;  true
+  }
+</code></pre>
+
+<p>The first element of the action is the method.
+The remaining elements are the conversions to apply to each argument.</p>
+
+<p>E.g. 1  <code>/f\((\d+),(\d+)\)/ =&gt;  [:func_f,:to_i,:to_i]</code>
+    The two arguments are converted to integers.</p>
+
+<p>E.g. 2  <code>/EVENT (.+)/ =&gt;  [:send_event,[:downcase,:to_sym]]</code>
+    The argument is converted to a lowercase symbol.</p>
+
+<p>E.g. 3  <code>/QUIT/  =&gt;  true</code>
+    The matched string becomes the method, in this case <code>:quit</code> .</p>
+
+<pre class="code Ruby"><code class="Ruby">parser = Parser.new
+parser = Parser.new \
+  input:    @input,
+  errors:   @isatty &amp;&amp; $stderr || @logger,
+  prompt:   &#39;&gt; &#39;,
+  target:   self,
+  rules:    {
+    /PLACE (\d+),(\d+),([A-Z]+)/    =&gt; [:place,:to_i,:to_i,[:downcase,:to_sym]],
+    /MOVE/                          =&gt; true,
+    /LEFT/                          =&gt; true,
+    /RIGHT/                         =&gt; true,
+    /REPORT/                        =&gt; true,
+    /QUIT/                          =&gt; @isatty,
+  },
+  default:       @isatty &amp;&amp; [:help_commands] || nil
+
+parser.start
+parser.stop
+</code></pre>
+
+<h4>Entity</h4>
+
+<p>An Entity represents a generic object that is to be used in a Simulator.
+For the entity to do anything useful, the Entity class should be used as a
+base class for specific entities.</p>
+
+<pre class="code Ruby"><code class="Ruby">entity = Entity.new
+
+entity.container                # Nil or the container it is contained in
+entity.contained?               # Whether the entity is contained in a container or not
+entity.location                 # The location of the entity if it is contained in an environment
+</code></pre>
+
+<h4>Container</h4>
+
+<p>A Container is an Entity that can contain other Entities.</p>
+
+<pre class="code Ruby"><code class="Ruby">container = Container.new
+
+container.contents              # Array of Entities contained in the container
+container.contains?(entity)     # Whether the container containes the specified entity
+container.add(entity)           # Contain the specific entity
+container.remove(entity)        # Uncontain the specific entity
+container.size                  # Number of entities contained in the container
+</code></pre>
+
+<h4>Environment</h4>
+
+<p>An Environment is a container that adds the notion of location.
+It creates an unbounded area where entities can placed at specific locations.
+Derived classes can limit the available locations.</p>
+
+<pre class="code Ruby"><code class="Ruby">environment = Environment.new
+an_entity   = Entity.new
+location    = [3,4]
+
+environment.add(an_entity)                # Places the entity in the environment container, but without a location.
+environment.place(an_entity, location)    # Places the entity in the environment container at the location.
+
+environment.contents                      # Lists the entities in the environment.
+an_entity.location                        # Outputs the location of the entity.
+environment.location_of(an_entity)        # Also outputs the location of the entity.
+environment.exists_at?(location)          # Returns whether the environment exists at the location (i.e. is it a valid location?).
+
+environment.place(an_entity, :entrance)   # Named locations can also be used.  The semantics of locations is not managed by the Environment.
+</code></pre>
+
+<h4>Table</h4>
+
+<p>A Table creates a flat rectangular limited environment.  The default size is 5 units x 5 units.</p>
+
+<pre class="code Ruby"><code class="Ruby">table = Table.new
+</code></pre>
+
+<p>Creates a default table.</p>
+
+<pre class="code Ruby"><code class="Ruby">table = Table.new size: rand(2..20)
+</code></pre>
+
+<p>Creates a table of random size between 2 to 20; thus squares from:</p>
+
+<ul>
+<li>(0,0) to (1,1), to</li>
+<li>(0,0) to (19,19)</li>
+</ul>
+
+<pre class="code Ruby"><code class="Ruby">table = Table.new size: &#39;4&#39;
+
+</code></pre>
+
+<p>Creates a square table 4 units x 4 units.</p>
+
+<pre class="code Ruby"><code class="Ruby">table = Table.new size: &#39;(3,8)&#39;
+table = Table.new size: &#39;[3,8]&#39;
+table = Table.new size: &#39; 3,8 &#39;
+table = Table.new size: &#39; 3*8 &#39;
+table = Table.new size: &#39; 3x8 &#39;
+table = Table.new size: &#39; 3 8 &#39;
+
+</code></pre>
+
+<p>All create a rectangular table 3 units x 8 units.  This allows table size to be provided
+as an option in ARGV and be processed properly by the Table class.</p>
+
+<h4>Robot</h4>
+
+<p>A Robot is a programmable entity that obeys commands.  Currently, the Robots only
+execute commands immediately (i.e. they are not yet programmable).</p>
+
+<pre class="code Ruby"><code class="Ruby">robot = Robot.new
+
+robot.place
+robot.report
+robot.move
+robot.left
+robot.right
+</code></pre>
+
+<h2>Testing</h2>
+
+<p>All the testing files can be run by</p>
+
+<pre class="code ruby"><code class="ruby">$ cd test
+$ ruby test_robot_simulator.rb
+</code></pre>
+
+<p>Individual modules can be tested by running the corresponding test file, e.g.:</p>
+
+<pre class="code ruby"><code class="ruby">$ cd test
+$ ruby test_robot.rb
+</code></pre>
+
+<p>A number of systematically generated test programs (i.e. robot command files) are located in
+<code>Application/test/programs</code>.  These programs are contained in and generated by
+<code>Application/test/programs/gen_test_progs.rb</code>.  This file can be modified to incorporate exhaustive testing.
+Tests can be appended to the file in the format:</p>
+
+<pre class="code ruby"><code class="ruby">========
+PLACE 2,2,NORTH
+MOVE
+LEFT
+MOVE
+REPORT
+--------
+1,3,WEST
+========
+PLACE 2,2,EAST
+MOVE
+LEFT
+MOVE
+REPORT
+--------
+3,3,NORTH
+========
+</code></pre>
+
+<p>Lines containing any positive number of <code>=</code> characters separate tests.
+Lines containing any positive number of <code>-</code> characters separate the input from the output (with the input coming first).</p>
+
+<h2>History</h2>
+
+<p>Most recent work was:</p>
+
+<ul>
+<li>Allowed tables to be rectangular</li>
+</ul>
+
+<pre class="code ruby"><code class="ruby">* 4a34c33 2015-04-29 | Updated README, Made instances of entities in a container unique (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
+* 5f9ef37 2015-04-25 | Allowed tables to be different sizes (library only) (see Documentation/Requirements.md) (HEAD, origin/master, origin/HEAD, master) [Lui
+s Esteban]
+* 6771994 2015-04-20 | Fixed link to syntax diagram in README.md (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
+* 47c4b61 2015-04-20 | Created systematic tests, in particular for invalid commands and movements; also fixed bugs revealed from systematic testing (tag: v1.0
+) [Luis Esteban]
+* de2c242 2015-04-20 | Completed remaining empty classes (see Documentation/Requirements.md): Completed definitions of Entity classes (Entity, Container, Envi
+ronment), of Robot and Table, and of the Simulator. (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
+* 8af7281 2015-04-20 | Basic Logging and Basic Parsing (see Documentation/Requirements.md): Created Parser class, filled in basic functions of Logger class. (
+HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
+* a671371 2015-04-16 | Empty infrastructure (Simulator, Entity/Robot. Entity/Container/Environment/Table, Logger) from initial client brief (see Documentation
+/Requirements.md) (tag: v0.0) [Luis Esteban]
+* 70acc71 2015-04-16 | Initial commit [Luis Esteban]
+</code></pre>
+
+<h2>Contributing</h2>
+
+<blockquote>
+<p>The purpose of this project, being a presentation, precludes contributions. </p>
+</blockquote>
+
+<h2>Author</h2>
+
+<p>Luis Esteban M.Sc., M.Teach.</p>
+
+<h2>License</h2>
+
+<p>(No License)</p>
+
+<p>Copyright (c)2015</p>
+
+<p>Due to the nature of this project, duplication is not permitted.  However, transfering this project to another computer is permitted for analysis purposes.
+Modification is not permitted except for the purpose of providing feedback to author.</p>
+
+<p>THE SOFTWARE IS PROVIDED &#39;AS IS&#39;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+</div></div>
+
+    <div id="footer">
+  Generated on Sat May  9 17:26:19 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.0.0).
+</div>
+
+  </body>
+</html>
