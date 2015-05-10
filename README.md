@@ -68,7 +68,8 @@ The following gems are used:
 The following standard libraries are used:
 
 * Logger
-* OptionParser
+* Syslog
+* OptionParser (optparse)
 * Minitest
 * ReadLine
 * Matrix (via mathn)
@@ -183,10 +184,11 @@ Note, the `QUIT` command is available in interactive mode only.
 
 Most recent work was:
 
-* Base infrastructure (Launch file and Simulator) from initial client brief (see doc/Requirements.md)
+* Setup I/O handling, including logging (see doc/Requirements.md)
 
 
 ```
+* 4165a31 2015-05-09 | Base infrastructure (Launch file and Simulator) from initial client brief (see doc/Requirements.md) (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
 * 5141a50 2015-05-07 | Initial commit (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
 ```
 

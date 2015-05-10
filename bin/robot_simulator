@@ -6,6 +6,8 @@
 #       Created
 #
 
+
+# @author   Luis Esteban M.Sc., M.Teach
 begin
   require 'robot_simulator'
 rescue LoadError

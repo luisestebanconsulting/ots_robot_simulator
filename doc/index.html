@@ -141,7 +141,8 @@ $ cd ots_robot_simulator
 
 <ul>
 <li>Logger</li>
-<li>OptionParser</li>
+<li>Syslog</li>
+<li>OptionParser (optparse)</li>
 <li>Minitest</li>
 <li>ReadLine</li>
 <li>Matrix (via mathn)</li>
@@ -245,304 +246,16 @@ C:&gt; robot_simulator.bat [-h] [cmdfile]
 
 <p>Note, the <code>QUIT</code> command is available in interactive mode only.</p>
 
-<h3>Library Usage</h3>
-
-<p>To include the entire library,</p>
-
-<pre class="code Ruby"><code class="Ruby">require &#39;robot_simulator&#39;
-</code></pre>
-
-<p>See <a href="./index.html">/doc</a> for the full documentation.</p>
-
-<p>The following classes are available:</p>
-
-<p><img src="./doc/yard_graph.png" alt="Class Hierarchy Diagram"></p>
-
-<p><img src="./yard_graph.png" alt="Class Hierarchy Diagram"></p>
-
-<ul>
-<li><em>Simulator</em>: creates the objects and runs the simulation</li>
-<li><em>Logger</em>: logs messages for debugging</li>
-<li><em>Parser</em>: a generic command line parser</li>
-<li><em>Entity</em>: an object to be simulated
-
-<ul>
-<li><em>Container</em>: an entity which contains entities</li>
-<li><em>Environment</em>: a container which contains entities at specific locations
-
-<ul>
-<li><em>Table</em>: an environment which contains entities at specific bounded locations</li>
-</ul></li>
-<li><em>Robot</em>: an entity which moves on a table</li>
-</ul></li>
-</ul>
-
-<h4>Simulator</h4>
-
-<p>A Simulator gathers together various objects and sends commands to them.
-The Simulator class in <code>toy_robot_simulator</code> is not a generic simulator,
-but rather specifically created for the toy robot simulation.</p>
-
-<p>It expects the command line arguments to be passed to it, but defaults
-will be used if they are omitted.</p>
-
-<p>The defaults are:</p>
-
-<ul>
-<li>stdin is used for robot command input.</li>
-</ul>
-
-<p>Unless input comes from a pipe, a prompt is issued for each command and errors
-are sent to stderr; otherwise errors are sent to a log file (<code>robot_simulator.log</code>).</p>
-
-<pre class="code Ruby"><code class="Ruby">simulator = Simulator.new
-simulator = Simulator.new ARGV
-</code></pre>
-
-<h4>Logger</h4>
-
-<p>A Logger sends log messages to a file or stream, such as $stderr.</p>
-
-<pre class="code Ruby"><code class="Ruby">logger = Logger.new
-logger = Logger.new log_to: &#39;my_log&#39;
-
-logger.puts &quot;my message&quot;      # Send the to message to the log output.
-logger.delete_log             # If the log is a file and exists, it will be deleted.
-</code></pre>
-
-<h4>Parser</h4>
-
-<p>A Parser reads lines of text from a file or stream, such as $stdin, and translates
-the lines into object oriented messages to a target object.  A Parser is initialised
-with a Hash of options.</p>
-
-<ul>
-<li> <code>:input</code>          - The file to parse (could be stdin)</li>
-<li> <code>:prompt</code>         - The prompt to use if stdin is interactive</li>
-<li> <code>:errors</code>         - Errors are sent to this stream if not nil</li>
-<li> <code>:rules</code>          - A Hash of RegExps and conversions (see below)</li>
-<li> <code>:target</code>         - The object to which messages from matching rules are sent</li>
-<li> <code>:stop_on_error</code>  - A Boolean indicating to stop parsing when a rule is not matched</li>
-<li> <code>:default</code>        - An action for unmatched input</li>
-<li> <code>:start</code>          - A Boolean indicating to start parsing immediately on creation</li>
-</ul>
-
-<p>The options have the following defaults:</p>
-
-<ul>
-<li><code>input:          STDIN</code>    Default to input coming from stdin</li>
-<li><code>prompt:         &#39;&gt; &#39;</code>    If input is stdin and not piped, this is the prompt</li>
-<li><code>errors:         nil</code>    Errors are not output</li>
-<li><code>rules:          { /.*/ =&gt; true }</code>    Which means everyline is matched and thus sent to the target as a method</li>
-<li><code>target:         self</code>    Really only useful for subclasses with specific methods</li>
-<li><code>stop_on_error:  false</code>    Do not stop on errors (i.e. when no rules match input)</li>
-<li><code>default:        nil</code>    No default action</li>
-<li><code>start:          nil</code>    Don&#39;t start on creation</li>
-</ul>
-
-<p>If <code>:input</code> or <code>:errors</code> are strings, then a file is opened for reading input or writing errors.</p>
-
-<p><code>:rules</code> should be a Hash in the form RegExp =&gt; action, e.g.:</p>
-
-<pre class="code Ruby"><code class="Ruby">  {
-    /f\((\d+),(\d+)\)/  =&gt;  [:func_f,:to_i,:to_i],
-    /EVENT (.+)/        =&gt;  [:send_event,[:downcase,:to_sym]],
-    /QUIT/              =&gt;  true
-  }
-</code></pre>
-
-<p>The first element of the action is the method.
-The remaining elements are the conversions to apply to each argument.</p>
-
-<p>E.g. 1  <code>/f\((\d+),(\d+)\)/ =&gt;  [:func_f,:to_i,:to_i]</code>
-    The two arguments are converted to integers.</p>
-
-<p>E.g. 2  <code>/EVENT (.+)/ =&gt;  [:send_event,[:downcase,:to_sym]]</code>
-    The argument is converted to a lowercase symbol.</p>
-
-<p>E.g. 3  <code>/QUIT/  =&gt;  true</code>
-    The matched string becomes the method, in this case <code>:quit</code> .</p>
-
-<pre class="code Ruby"><code class="Ruby">parser = Parser.new
-parser = Parser.new \
-  input:    @input,
-  errors:   @isatty &amp;&amp; $stderr || @logger,
-  prompt:   &#39;&gt; &#39;,
-  target:   self,
-  rules:    {
-    /PLACE (\d+),(\d+),([A-Z]+)/    =&gt; [:place,:to_i,:to_i,[:downcase,:to_sym]],
-    /MOVE/                          =&gt; true,
-    /LEFT/                          =&gt; true,
-    /RIGHT/                         =&gt; true,
-    /REPORT/                        =&gt; true,
-    /QUIT/                          =&gt; @isatty,
-  },
-  default:       @isatty &amp;&amp; [:help_commands] || nil
-
-parser.start
-parser.stop
-</code></pre>
-
-<h4>Entity</h4>
-
-<p>An Entity represents a generic object that is to be used in a Simulator.
-For the entity to do anything useful, the Entity class should be used as a
-base class for specific entities.</p>
-
-<pre class="code Ruby"><code class="Ruby">entity = Entity.new
-
-entity.container                # Nil or the container it is contained in
-entity.contained?               # Whether the entity is contained in a container or not
-entity.location                 # The location of the entity if it is contained in an environment
-</code></pre>
-
-<h4>Container</h4>
-
-<p>A Container is an Entity that can contain other Entities.</p>
-
-<pre class="code Ruby"><code class="Ruby">container = Container.new
-
-container.contents              # Array of Entities contained in the container
-container.contains?(entity)     # Whether the container containes the specified entity
-container.add(entity)           # Contain the specific entity
-container.remove(entity)        # Uncontain the specific entity
-container.size                  # Number of entities contained in the container
-</code></pre>
-
-<h4>Environment</h4>
-
-<p>An Environment is a container that adds the notion of location.
-It creates an unbounded area where entities can placed at specific locations.
-Derived classes can limit the available locations.</p>
-
-<pre class="code Ruby"><code class="Ruby">environment = Environment.new
-an_entity   = Entity.new
-location    = [3,4]
-
-environment.add(an_entity)                # Places the entity in the environment container, but without a location.
-environment.place(an_entity, location)    # Places the entity in the environment container at the location.
-
-environment.contents                      # Lists the entities in the environment.
-an_entity.location                        # Outputs the location of the entity.
-environment.location_of(an_entity)        # Also outputs the location of the entity.
-environment.exists_at?(location)          # Returns whether the environment exists at the location (i.e. is it a valid location?).
-
-environment.place(an_entity, :entrance)   # Named locations can also be used.  The semantics of locations is not managed by the Environment.
-</code></pre>
-
-<h4>Table</h4>
-
-<p>A Table creates a flat rectangular limited environment.  The default size is 5 units x 5 units.</p>
-
-<pre class="code Ruby"><code class="Ruby">table = Table.new
-</code></pre>
-
-<p>Creates a default table.</p>
-
-<pre class="code Ruby"><code class="Ruby">table = Table.new size: rand(2..20)
-</code></pre>
-
-<p>Creates a table of random size between 2 to 20; thus squares from:</p>
-
-<ul>
-<li>(0,0) to (1,1), to</li>
-<li>(0,0) to (19,19)</li>
-</ul>
-
-<pre class="code Ruby"><code class="Ruby">table = Table.new size: &#39;4&#39;
-
-</code></pre>
-
-<p>Creates a square table 4 units x 4 units.</p>
-
-<pre class="code Ruby"><code class="Ruby">table = Table.new size: &#39;(3,8)&#39;
-table = Table.new size: &#39;[3,8]&#39;
-table = Table.new size: &#39; 3,8 &#39;
-table = Table.new size: &#39; 3*8 &#39;
-table = Table.new size: &#39; 3x8 &#39;
-table = Table.new size: &#39; 3 8 &#39;
-
-</code></pre>
-
-<p>All create a rectangular table 3 units x 8 units.  This allows table size to be provided
-as an option in ARGV and be processed properly by the Table class.</p>
-
-<h4>Robot</h4>
-
-<p>A Robot is a programmable entity that obeys commands.  Currently, the Robots only
-execute commands immediately (i.e. they are not yet programmable).</p>
-
-<pre class="code Ruby"><code class="Ruby">robot = Robot.new
-
-robot.place
-robot.report
-robot.move
-robot.left
-robot.right
-</code></pre>
-
-<h2>Testing</h2>
-
-<p>All the testing files can be run by</p>
-
-<pre class="code ruby"><code class="ruby">$ cd test
-$ ruby test_robot_simulator.rb
-</code></pre>
-
-<p>Individual modules can be tested by running the corresponding test file, e.g.:</p>
-
-<pre class="code ruby"><code class="ruby">$ cd test
-$ ruby test_robot.rb
-</code></pre>
-
-<p>A number of systematically generated test programs (i.e. robot command files) are located in
-<code>Application/test/programs</code>.  These programs are contained in and generated by
-<code>Application/test/programs/gen_test_progs.rb</code>.  This file can be modified to incorporate exhaustive testing.
-Tests can be appended to the file in the format:</p>
-
-<pre class="code ruby"><code class="ruby">========
-PLACE 2,2,NORTH
-MOVE
-LEFT
-MOVE
-REPORT
---------
-1,3,WEST
-========
-PLACE 2,2,EAST
-MOVE
-LEFT
-MOVE
-REPORT
---------
-3,3,NORTH
-========
-</code></pre>
-
-<p>Lines containing any positive number of <code>=</code> characters separate tests.
-Lines containing any positive number of <code>-</code> characters separate the input from the output (with the input coming first).</p>
-
 <h2>History</h2>
 
 <p>Most recent work was:</p>
 
 <ul>
-<li>Allowed tables to be rectangular</li>
+<li>Setup I/O handling, including logging (see doc/Requirements.md)</li>
 </ul>
 
-<pre class="code ruby"><code class="ruby">* 4a34c33 2015-04-29 | Updated README, Made instances of entities in a container unique (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
-* 5f9ef37 2015-04-25 | Allowed tables to be different sizes (library only) (see Documentation/Requirements.md) (HEAD, origin/master, origin/HEAD, master) [Lui
-s Esteban]
-* 6771994 2015-04-20 | Fixed link to syntax diagram in README.md (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
-* 47c4b61 2015-04-20 | Created systematic tests, in particular for invalid commands and movements; also fixed bugs revealed from systematic testing (tag: v1.0
-) [Luis Esteban]
-* de2c242 2015-04-20 | Completed remaining empty classes (see Documentation/Requirements.md): Completed definitions of Entity classes (Entity, Container, Envi
-ronment), of Robot and Table, and of the Simulator. (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
-* 8af7281 2015-04-20 | Basic Logging and Basic Parsing (see Documentation/Requirements.md): Created Parser class, filled in basic functions of Logger class. (
-HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
-* a671371 2015-04-16 | Empty infrastructure (Simulator, Entity/Robot. Entity/Container/Environment/Table, Logger) from initial client brief (see Documentation
-/Requirements.md) (tag: v0.0) [Luis Esteban]
-* 70acc71 2015-04-16 | Initial commit [Luis Esteban]
+<pre class="code ruby"><code class="ruby">* 4165a31 2015-05-09 | Base infrastructure (Launch file and Simulator) from initial client brief (see doc/Requirements.md) (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
+* 5141a50 2015-05-07 | Initial commit (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
 </code></pre>
 
 <h2>Contributing</h2>
@@ -574,7 +287,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Sat May  9 17:26:19 2015 by
+  Generated on Sun May 10 21:06:22 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.0.0).
 </div>

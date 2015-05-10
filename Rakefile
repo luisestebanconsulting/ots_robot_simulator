@@ -5,6 +5,8 @@
 #       Created
 #
 
+# Rakefile for OTS Robot Simulator project
+# @author   Luis Esteban M.Sc., M.Teach
 desc "Build and run the project"
 task default:   [:build, :run]
 
