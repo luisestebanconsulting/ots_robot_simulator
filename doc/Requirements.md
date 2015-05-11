@@ -3,7 +3,14 @@
 ## Description from Client Brief
 
 * The application is a simulation of a toy robot moving on a square tabletop.
-* Create an application that can read in commands.
+* Create an application that can read in commands of the following form:
+```
+PLACE X,Y,F
+MOVE
+LEFT
+RIGHT
+REPORT
+```
 
 ### Semantics of Commands
 

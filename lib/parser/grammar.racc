@@ -1,0 +1,114 @@
+#
+#   grammar.racc    - Parser syntax for Robot Commands
+#
+#     Luis Esteban    10 May 2015
+#       Created
+#
+
+
+# Parser class for parsing syntax
+# @author   Luis Esteban M.Sc., M.Teach
+
+class Grammar
+  
+
+token
+  
+  PLACE REPORT LEFT RIGHT MOVE
+  NORTH EAST SOUTH WEST
+  NUMBER IDENTIFIER EOL
+
+
+start   commands
+
+
+rule
+  
+  commands              :   
+                        |   command commands
+  
+  command               :   place_command
+                        |   report_command
+                        |   left_command
+                        |   right_command
+                        |   move_command
+  
+  place_command         :   PLACE NUMBER ',' NUMBER ',' direction EOL
+                            {
+                              @target.place_command([val[1],val[3]],val[5])
+                            }
+  
+  report_command        :   REPORT EOL
+                            {
+                              @target.report_command
+                            }
+  
+  left_command          :   LEFT EOL
+                            {
+                              @target.left_command
+                            }
+  
+  right_command         :   RIGHT EOL
+                            {
+                              @target.right_command
+                            }
+  
+  move_command          :   MOVE EOL
+                            {
+                              @target.move_command
+                            }
+  
+  direction             :   NORTH
+                        |   EAST
+                        |   SOUTH
+                        |   WEST
+  
+
+
+---- header
+
+# Grammar for parsing robot simulator commands
+#
+# @author   Luis Esteban M.Sc., M.Teach
+
+---- inner
+  
+  # Starts parsing the tokens provide by the tokenizer
+  #
+  # @param    tokenizer   [Racc::Parser]      The tokenizer
+  # @param    yydebug     [Boolean]           Whether to turn on debugging in the parser
+  # @return               [Object]            Result of the start rule
+  
+  def parse(tokenizer, yydebug = false)
+    Simulator.log 'Grammar starting', :debug
+    @yydebug   = yydebug
+    @tokenizer = tokenizer
+    
+    do_parse
+  end
+  
+  
+  # Gets the next token from the tokenizer
+  
+  def next_token
+    token = @tokenizer.next_token
+    
+    Simulator.log "token = #{token.inspect}", :debug
+    
+    token
+  end
+  
+  
+  # Specifies the new target to receive messages during parsing
+  #
+  # @param    new_target    [Object]        The object to receive messages
+  
+  def target=(new_target)
+    
+    Simulator.log "new target = #{new_target.inspect}", :debug
+    
+    @target = new_target
+  end
+  
+  
+---- footer
