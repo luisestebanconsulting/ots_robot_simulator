@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: Requirements
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!file.Requirements.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: Requirements</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><h1>Toy Robot Simulator</h1>
+
+<h2>Description from Client Brief</h2>
+
+<ul>
+<li>The application is a simulation of a toy robot moving on a square tabletop, of dimensions 5 units x 5 units.</li>
+<li>There are no other obstructions on the table surface.</li>
+<li>The robot is free to roam around the surface of the table, but must be prevented from falling to
+destruction. Any movement that would result in the robot falling from the table must be prevented,
+however further valid movement commands must still be allowed.</li>
+<li>Create an application that can read in commands of the following form:
+<code>
+PLACE X,Y,F
+MOVE
+LEFT
+RIGHT
+REPORT
+</code></li>
+</ul>
+
+<h3>Semantics of Commands</h3>
+
+<h4>Input</h4>
+
+<p>Input can be from a file, or from standard input, as the developer chooses.</p>
+
+<h4>Place Command</h4>
+
+<p><code>PLACE</code> will put the toy robot on the table in position X,Y and
+facing NORTH, SOUTH, EAST or WEST.</p>
+
+<h4>Report Command</h4>
+
+<p><code>REPORT</code> will announce the X,Y and F of the robot. This can be in any form, but
+standard output is sufficient.</p>
+
+<h4>Move Command</h4>
+
+<p><code>MOVE</code> will move the toy robot one unit forward in the direction it is currently
+facing.</p>
+
+<h4>Left Command</h4>
+
+<p><code>LEFT</code> will rotate the robot 90 degrees counter-clockwise (i.e. North turns to West).</p>
+
+<h4>Right Command</h4>
+
+<p><code>RIGHT</code> will rotate the robot 90 degrees clockwise (i.e. North turns to East).</p>
+
+<h4>Constraints</h4>
+
+<h5>Turning Commands</h5>
+
+<p>Turning commands do not change the position of the robot.</p>
+
+<h5>Origin</h5>
+
+<p>The origin (0,0) can be considered to be the SOUTH WEST most corner.</p>
+
+<h5>Valid Commands</h5>
+
+<p>The first valid command to the robot is a <code>PLACE</code> command, after that, any
+sequence of commands may be issued, in any order, including another <code>PLACE</code>
+command. The application should discard all commands in the sequence until a
+valid <code>PLACE</code> command has been executed.</p>
+
+<p>The toy robot must not fall off the table during movement. This also includes
+the initial placement of the toy robot.  Any move that would cause the robot
+to fall must be ignored.</p>
+
+<p>A robot that is not on the table can choose the ignore the <code>MOVE</code>, <code>LEFT</code>, <code>RIGHT</code>,
+and <code>REPORT</code> commands.</p>
+
+<h3>Testing</h3>
+
+<p>Provide test data to exercise the application.</p>
+
+<hr>
+
+<h2>Analysis and Design Decisions</h2>
+
+<h3>Classes</h3>
+
+<ul>
+<li><span class='object_link'><a href="Simulator.html" title="Simulator (class)">Simulator</a></span></li>
+<li><span class='object_link'><a href="Entity.html" title="Entity (class)">Entity</a></span> / <span class='object_link'><a href="Robot.html" title="Robot (class)">Robot</a></span></li>
+<li><span class='object_link'><a href="Entity.html" title="Entity (class)">Entity</a></span> / <span class='object_link'><a href="Container.html" title="Container (class)">Container</a></span> / <span class='object_link'><a href="Environment.html" title="Environment (class)">Environment</a></span> / <span class='object_link'><a href="Table.html" title="Table (class)">Table</a></span></li>
+<li><span class='object_link'><a href="Parser.html" title="Parser (class)">Parser</a></span></li>
+</ul>
+
+<p><img src="./yard_graph.png" alt="Class Diagram"></p>
+
+<h4>Simulator</h4>
+
+<p>A Simulator manages a simulation, which may involve Entities.</p>
+
+<p>Verbs:</p>
+
+<ul>
+<li>Load simulation</li>
+<li>Simulate</li>
+</ul>
+
+<h4>Entity</h4>
+
+<p>An Entity is an object that is managed in a simulation.  Entities can be contained in other Entities (see <span class='object_link'><a href="Container.html" title="Container (class)">Container</a></span>).</p>
+
+<p>Verbs:</p>
+
+<ul>
+<li>What is my container?</li>
+<li>What is my location?</li>
+</ul>
+
+<h5>Robot</h5>
+
+<p>A Robot is an Entity that moves on a Table.</p>
+
+<p>Verbs:</p>
+
+<ul>
+<li>Move</li>
+<li>Turn (Left/Right)</li>
+<li>Face (Place)</li>
+</ul>
+
+<h5>Container</h5>
+
+<p>A Container is an Entity that can contain other Entities.</p>
+
+<p>Attributes:</p>
+
+<ul>
+<li>Contents</li>
+</ul>
+
+<p>Verbs:</p>
+
+<ul>
+<li>Add</li>
+<li>Remove</li>
+<li>Do I contain entity x?</li>
+</ul>
+
+<h5>Environment</h5>
+
+<p>An Environment is a container that provides locations for contained Entities to be placed.</p>
+
+<p>Verbs:</p>
+
+<ul>
+<li>Place</li>
+</ul>
+
+<h5>Table</h5>
+
+<p>A Table is an Environment where a Robot can be placed and move around.</p>
+
+<p>Attributes:</p>
+
+<ul>
+<li>Size</li>
+</ul>
+
+<p>Since constants are often changed, the size of the table may be.
+Also, it may be coincidence that the dimensions are both the same.  The client/users
+may request rectangular tables.</p>
+
+<p>Only the class library allows this.  The simulation still runs with a table of size 5 (as according to the brief).</p>
+
+<p>Verbs:</p>
+
+<ul>
+<li>Does the table exist at this location?</li>
+</ul>
+
+<h4>Parser</h4>
+
+<p>A Parser reads from a file or pipe and parses the stream into messages (i.e. method calls to a target object).</p>
+
+<p>Verbs:</p>
+
+<ul>
+<li>Start parsing</li>
+<li>Stop parsing</li>
+</ul>
+
+<h3>Languages/Protocols</h3>
+
+<h4>Robot Command Language</h4>
+
+<p>The robot command language has the following syntax:</p>
+
+<p><img src="./CommandLanguageSyntax.png" alt="Syntax Diagram"></p>
+
+<p>Each command line corresponds to the respective commands above.</p>
+
+<h4>Examples</h4>
+
+<h5>Example A</h5>
+
+<h6>Input</h6>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>PLACE</span> <span class='int'>0</span><span class='comma'>,</span><span class='int'>0</span><span class='comma'>,</span><span class='const'>NORTH</span>
+<span class='const'>MOVE</span>
+<span class='const'>REPORT</span>
+</code></pre>
+
+<h6>Output</h6>
+
+<pre class="code ruby"><code class="ruby">0,1,NORTH
+</code></pre>
+
+<h5>Example B</h5>
+
+<h6>Input</h6>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>PLACE</span> <span class='int'>0</span><span class='comma'>,</span><span class='int'>0</span><span class='comma'>,</span><span class='const'>NORTH</span>
+<span class='const'>LEFT</span>
+<span class='const'>REPORT</span>
+</code></pre>
+
+<h6>Output</h6>
+
+<pre class="code ruby"><code class="ruby">0,0,WEST
+</code></pre>
+
+<h5>Example C</h5>
+
+<h6>Input</h6>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>PLACE</span> <span class='int'>1</span><span class='comma'>,</span><span class='int'>2</span><span class='comma'>,</span><span class='const'>EAST</span>
+<span class='const'>MOVE</span>
+<span class='const'>MOVE</span>
+<span class='const'>LEFT</span>
+<span class='const'>MOVE</span>
+<span class='const'>REPORT</span>
+</code></pre>
+
+<h6>Output</h6>
+
+<pre class="code ruby"><code class="ruby">3,3,NORTH
+</code></pre>
+
+<h3>Testing</h3>
+
+<p>There is a separate folder for testing.
+The folder contains MiniTest scripts for each class.</p>
+</div></div>
+
+    <div id="footer">
+  Generated on Wed May 13 02:26:42 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.0.0).
+</div>
+
+  </body>
+</html>

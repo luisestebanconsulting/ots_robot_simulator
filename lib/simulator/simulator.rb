@@ -221,6 +221,11 @@ public
       input:            @input,
       target:           self,
       debug_grammar:    @debug_grammar
+    
+    @table = Table.new
+    
+    @robot = Robot.new
+    
     log 'Simulation ready'
   end
   
@@ -258,7 +263,10 @@ public
   # @param    direction [Symbol]            The direction to face the robot
   
   def place_command(location, direction)
-    puts "PLACE #{direction.inspect}@#{location.inspect}"
+    return unless @table.exists_at?(location)
+    
+    @table.place(@robot, location)
+    @robot.place(direction)
   end
   
   
@@ -266,7 +274,7 @@ public
   #
   
   def report_command
-    puts 'REPORT'
+    @robot.report
   end
   
   
@@ -274,7 +282,7 @@ public
   #
   
   def left_command
-    puts 'LEFT'
+    @robot.left
   end
   
   
@@ -282,7 +290,7 @@ public
   #
   
   def right_command
-    puts 'RIGHT'
+    @robot.right
   end
   
   
@@ -290,7 +298,7 @@ public
   #
   
   def move_command
-    puts 'MOVE'
+    @robot.move
   end
   
   

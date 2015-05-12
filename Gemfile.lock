@@ -4,6 +4,8 @@ GEM
     metaclass (0.0.4)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
+    racc (1.4.12)
+    rexical (1.0.5)
     yard (0.8.7.6)
 
 PLATFORMS
@@ -11,4 +13,6 @@ PLATFORMS
 
 DEPENDENCIES
   mocha
+  racc
+  rexical
   yard

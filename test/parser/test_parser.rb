@@ -36,7 +36,7 @@ describe Parser do
     it 'Reads a test file' do
       @parser.input = File.join(ASSETS_DIR,'test1')
       
-      @mock_target.expects(:place_command).with([3,4],:east)
+      @mock_target.expects(:place_command).with(Vector[3,4],:east)
       @mock_target.expects(:report_command)
       @mock_target.expects(:move_command)
       @mock_target.expects(:left_command)

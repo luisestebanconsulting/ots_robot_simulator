@@ -32,10 +32,11 @@ rule
                         |   left_command
                         |   right_command
                         |   move_command
+                        |   error_command
   
   place_command         :   PLACE NUMBER ',' NUMBER ',' direction EOL
                             {
-                              @target.place_command([val[1],val[3]],val[5])
+                              @target.place_command(Vector[val[1],val[3]],val[5])
                             }
   
   report_command        :   REPORT EOL
@@ -56,6 +57,11 @@ rule
   move_command          :   MOVE EOL
                             {
                               @target.move_command
+                            }
+  
+  error_command         :   error EOL
+                            {
+                              yyerrok
                             }
   
   direction             :   NORTH
@@ -108,6 +114,18 @@ rule
     Simulator.log "new target = #{new_target.inspect}", :debug
     
     @target = new_target
+  end
+  
+  
+  # Outputs an error message for syntax errors
+  # 
+  # @param    t       [Integer]         ID of the token causing the error
+  # @param    val     [Object]          The value of the token
+  # @param    vstack  [Array<Object>]   Stack of token values
+  # @see      {racc/parser}
+  
+  def on_error(t, val, vstack)
+    Simulator.error "Syntax error in command: #{token_to_str(t) || '?'} (#{val.inspect}) unexpected"
   end
   
   

@@ -87,7 +87,7 @@ class Parser
   # Starts the parser parsing the input
   
   def start
-    Simulator.log 'Parser starting', :debug
+    Simulator.log 'Parser starting',            :debug
     Simulator.log "input? = #{input?.inspect}", :debug
     return unless input?
     

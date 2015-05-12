@@ -1,0 +1,6 @@
+--private
+--exclude grammar.rb
+--exclude tokens.rb
+lib/**/*.rb -
+README.md
+doc/Requirements.md

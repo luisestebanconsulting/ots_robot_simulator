@@ -189,13 +189,14 @@ Commands are issued to the simulator according to the following railroad diagram
 
 Most recent work was:
 
-* Setup lexical analysis and parsing with interactive/non-interactive input (see doc/Requirements.md)
+* Add entities: Robot and Table, and completed Simulator (see doc/Requirements.md)
 
 
 ```
-* badcb9c 2015-05-10 | Setup I/O handling, including logging (see doc/Requirements.md) (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
-* 4165a31 2015-05-09 | Base infrastructure (Launch file and Simulator) from initial client brief (see doc/Requirements.md) (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
-* 5141a50 2015-05-07 | Initial commit (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
+* 4b780b5 2015-05-11 | Setup lexical analysis and parsing with interactive/non-interactive input (see doc/Requirements.md) [Luis Esteban]
+* badcb9c 2015-05-10 | Setup I/O handling, including logging (see doc/Requirements.md) [Luis Esteban]
+* 4165a31 2015-05-09 | Base infrastructure (Launch file and Simulator) from initial client brief (see doc/Requirements.md) [Luis Esteban]
+* 5141a50 2015-05-07 | Initial commit [Luis Esteban]
 ```
 
 ## Contributing

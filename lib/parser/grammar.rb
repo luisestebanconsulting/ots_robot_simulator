@@ -13,7 +13,7 @@ require 'racc/parser.rb'
 
 class Grammar < Racc::Parser
 
-module_eval(<<'...end grammar.racc/module_eval...', 'grammar.racc', 75)
+module_eval(<<'...end grammar.racc/module_eval...', 'grammar.racc', 81)
   
   # Starts parsing the tokens provide by the tokenizer
   #
@@ -53,40 +53,54 @@ module_eval(<<'...end grammar.racc/module_eval...', 'grammar.racc', 75)
   end
   
   
+  # Outputs an error message for syntax errors
+  # 
+  # @param    t       [Integer]         ID of the token causing the error
+  # @param    val     [Object]          The value of the token
+  # @param    vstack  [Array<Object>]   Stack of token values
+  # @see      {racc/parser}
+  
+  def on_error(t, val, vstack)
+    Simulator.error "Syntax error in command: #{token_to_str(t) || '?'} (#{val.inspect}) unexpected"
+  end
+  
+  
 ...end grammar.racc/module_eval...
 ##### State transition tables begin ###
 
 racc_action_table = [
-     8,     9,    10,    11,    12,     8,     9,    10,    11,    12,
-    25,    26,    27,    28,    19,    16,    17,    18,    15,    20,
-    21,    22,    23,    13,    29 ]
+    14,     9,    10,    11,    12,    13,    14,     9,    10,    11,
+    12,    13,    28,    29,    30,    31,    21,    18,    19,    20,
+    17,    22,    23,    24,    25,    26,    15,    32 ]
 
 racc_action_check = [
-     0,     0,     0,     0,     0,     2,     2,     2,     2,     2,
-    23,    23,    23,    23,    12,     9,    10,    11,     8,    13,
-    15,    21,    22,     1,    24 ]
+     0,     0,     0,     0,     0,     0,     2,     2,     2,     2,
+     2,     2,    26,    26,    26,    26,    13,    10,    11,    12,
+     9,    14,    15,    17,    24,    25,     1,    27 ]
 
 racc_action_pointer = [
-    -2,    23,     3,   nil,   nil,   nil,   nil,   nil,     7,     2,
-     3,     4,     1,    19,   nil,     6,   nil,   nil,   nil,   nil,
-   nil,    10,     8,     3,    11,   nil,   nil,   nil,   nil,   nil ]
+    -1,    26,     5,   nil,   nil,   nil,   nil,   nil,   nil,     9,
+     4,     5,     6,     3,     8,    22,   nil,     9,   nil,   nil,
+   nil,   nil,   nil,   nil,    13,    11,     5,    14,   nil,   nil,
+   nil,   nil,   nil ]
 
 racc_action_default = [
-    -1,   -17,    -1,    -3,    -4,    -5,    -6,    -7,   -17,   -17,
-   -17,   -17,   -17,   -17,    -2,   -17,    -9,   -10,   -11,   -12,
-    30,   -17,   -17,   -17,   -17,   -13,   -14,   -15,   -16,    -8 ]
+    -1,   -19,    -1,    -3,    -4,    -5,    -6,    -7,    -8,   -19,
+   -19,   -19,   -19,   -19,   -19,   -19,    -2,   -19,   -10,   -11,
+   -12,   -13,   -14,    33,   -19,   -19,   -19,   -19,   -15,   -16,
+   -17,   -18,    -9 ]
 
 racc_goto_table = [
-     1,    24,    14 ]
+     1,    27,    16 ]
 
 racc_goto_check = [
-     1,     8,     1 ]
+     1,     9,     1 ]
 
 racc_goto_pointer = [
-   nil,     0,   nil,   nil,   nil,   nil,   nil,   nil,   -22 ]
+   nil,     0,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   -25 ]
 
 racc_goto_default = [
-   nil,   nil,     2,     3,     4,     5,     6,     7,   nil ]
+   nil,   nil,     2,     3,     4,     5,     6,     7,     8,   nil ]
 
 racc_reduce_table = [
   0, 0, :racc_error,
@@ -97,19 +111,21 @@ racc_reduce_table = [
   1, 17, :_reduce_none,
   1, 17, :_reduce_none,
   1, 17, :_reduce_none,
-  7, 18, :_reduce_8,
-  2, 19, :_reduce_9,
-  2, 20, :_reduce_10,
-  2, 21, :_reduce_11,
-  2, 22, :_reduce_12,
-  1, 23, :_reduce_none,
-  1, 23, :_reduce_none,
-  1, 23, :_reduce_none,
-  1, 23, :_reduce_none ]
+  1, 17, :_reduce_none,
+  7, 18, :_reduce_9,
+  2, 19, :_reduce_10,
+  2, 20, :_reduce_11,
+  2, 21, :_reduce_12,
+  2, 22, :_reduce_13,
+  2, 23, :_reduce_14,
+  1, 24, :_reduce_none,
+  1, 24, :_reduce_none,
+  1, 24, :_reduce_none,
+  1, 24, :_reduce_none ]
 
-racc_reduce_n = 17
+racc_reduce_n = 19
 
-racc_shift_n = 30
+racc_shift_n = 33
 
 racc_token_table = {
   false => 0,
@@ -172,6 +188,7 @@ Racc_token_to_s_table = [
   "left_command",
   "right_command",
   "move_command",
+  "error_command",
   "direction" ]
 
 Racc_debug_parser = true
@@ -194,53 +211,63 @@ Racc_debug_parser = true
 
 # reduce 7 omitted
 
-module_eval(<<'.,.,', 'grammar.racc', 37)
-  def _reduce_8(val, _values, result)
-                                  @target.place_command([val[1],val[3]],val[5])
+# reduce 8 omitted
+
+module_eval(<<'.,.,', 'grammar.racc', 38)
+  def _reduce_9(val, _values, result)
+                                  @target.place_command(Vector[val[1],val[3]],val[5])
                             
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.racc', 42)
-  def _reduce_9(val, _values, result)
+module_eval(<<'.,.,', 'grammar.racc', 43)
+  def _reduce_10(val, _values, result)
                                   @target.report_command
                             
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.racc', 47)
-  def _reduce_10(val, _values, result)
+module_eval(<<'.,.,', 'grammar.racc', 48)
+  def _reduce_11(val, _values, result)
                                   @target.left_command
                             
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.racc', 52)
-  def _reduce_11(val, _values, result)
+module_eval(<<'.,.,', 'grammar.racc', 53)
+  def _reduce_12(val, _values, result)
                                   @target.right_command
                             
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.racc', 57)
-  def _reduce_12(val, _values, result)
+module_eval(<<'.,.,', 'grammar.racc', 58)
+  def _reduce_13(val, _values, result)
                                   @target.move_command
                             
     result
   end
 .,.,
 
-# reduce 13 omitted
-
-# reduce 14 omitted
+module_eval(<<'.,.,', 'grammar.racc', 63)
+  def _reduce_14(val, _values, result)
+                                  yyerrok
+                            
+    result
+  end
+.,.,
 
 # reduce 15 omitted
 
 # reduce 16 omitted
+
+# reduce 17 omitted
+
+# reduce 18 omitted
 
 def _reduce_none(val, _values, result)
   val[0]

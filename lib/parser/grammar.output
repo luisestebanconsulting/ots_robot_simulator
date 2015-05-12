@@ -9,15 +9,17 @@ rule 4 command: report_command
 rule 5 command: left_command
 rule 6 command: right_command
 rule 7 command: move_command
-rule 8 place_command: PLACE NUMBER "," NUMBER "," direction EOL
-rule 9 report_command: REPORT EOL
-rule 10 left_command: LEFT EOL
-rule 11 right_command: RIGHT EOL
-rule 12 move_command: MOVE EOL
-rule 13 direction: NORTH
-rule 14 direction: EAST
-rule 15 direction: SOUTH
-rule 16 direction: WEST
+rule 8 command: error_command
+rule 9 place_command: PLACE NUMBER "," NUMBER "," direction EOL
+rule 10 report_command: REPORT EOL
+rule 11 left_command: LEFT EOL
+rule 12 right_command: RIGHT EOL
+rule 13 move_command: MOVE EOL
+rule 14 error_command: error EOL
+rule 15 direction: NORTH
+rule 16 direction: EAST
+rule 17 direction: SOUTH
+rule 18 direction: WEST
 
 ------- Symbols -------
 
@@ -31,54 +33,58 @@ rule 16 direction: WEST
     on left : 1 2
   command (17)
     on right: 2
-    on left : 3 4 5 6 7
+    on left : 3 4 5 6 7 8
   place_command (18)
     on right: 3
-    on left : 8
+    on left : 9
   report_command (19)
     on right: 4
-    on left : 9
+    on left : 10
   left_command (20)
     on right: 5
-    on left : 10
+    on left : 11
   right_command (21)
     on right: 6
-    on left : 11
+    on left : 12
   move_command (22)
     on right: 7
-    on left : 12
-  direction (23)
+    on left : 13
+  error_command (23)
     on right: 8
-    on left : 13 14 15 16
+    on left : 14
+  direction (24)
+    on right: 9
+    on left : 15 16 17 18
 
 **Terminals, with rules where they appear
 
   $end (0) 
-  error (1) 
-  PLACE (2) 8
-  REPORT (3) 9
-  LEFT (4) 10
-  RIGHT (5) 11
-  MOVE (6) 12
-  NORTH (7) 13
-  EAST (8) 14
-  SOUTH (9) 15
-  WEST (10) 16
-  NUMBER (11) 8
+  error (1) 14
+  PLACE (2) 9
+  REPORT (3) 10
+  LEFT (4) 11
+  RIGHT (5) 12
+  MOVE (6) 13
+  NORTH (7) 15
+  EAST (8) 16
+  SOUTH (9) 17
+  WEST (10) 18
+  NUMBER (11) 9
   IDENTIFIER (12) 
-  EOL (13) 8 9 10 11 12
-  "," (14) 8
+  EOL (13) 9 10 11 12 13 14
+  "," (14) 9
 
 --------- State ---------
 
 state 0
 
 
-  PLACE         shift, and go to state 8
-  REPORT        shift, and go to state 9
-  LEFT          shift, and go to state 10
-  RIGHT         shift, and go to state 11
-  MOVE          shift, and go to state 12
+  error         shift, and go to state 14
+  PLACE         shift, and go to state 9
+  REPORT        shift, and go to state 10
+  LEFT          shift, and go to state 11
+  RIGHT         shift, and go to state 12
+  MOVE          shift, and go to state 13
   $default      reduce using rule 1 (commands)
 
   commands      go to state 1
@@ -88,31 +94,34 @@ state 0
   left_command  go to state 5
   right_command  go to state 6
   move_command  go to state 7
+  error_command  go to state 8
 
 state 1
 
 
-  $end          shift, and go to state 13
+  $end          shift, and go to state 15
 
 
 state 2
 
    2) commands : command _ commands
 
-  PLACE         shift, and go to state 8
-  REPORT        shift, and go to state 9
-  LEFT          shift, and go to state 10
-  RIGHT         shift, and go to state 11
-  MOVE          shift, and go to state 12
+  error         shift, and go to state 14
+  PLACE         shift, and go to state 9
+  REPORT        shift, and go to state 10
+  LEFT          shift, and go to state 11
+  RIGHT         shift, and go to state 12
+  MOVE          shift, and go to state 13
   $default      reduce using rule 1 (commands)
 
   command       go to state 2
-  commands      go to state 14
+  commands      go to state 16
   place_command  go to state 3
   report_command  go to state 4
   left_command  go to state 5
   right_command  go to state 6
   move_command  go to state 7
+  error_command  go to state 8
 
 state 3
 
@@ -151,156 +160,177 @@ state 7
 
 state 8
 
-   8) place_command : PLACE _ NUMBER "," NUMBER "," direction EOL
+   8) command : error_command _
 
-  NUMBER        shift, and go to state 15
+  $default      reduce using rule 8 (command)
 
 
 state 9
 
-   9) report_command : REPORT _ EOL
+   9) place_command : PLACE _ NUMBER "," NUMBER "," direction EOL
 
-  EOL           shift, and go to state 16
+  NUMBER        shift, and go to state 17
 
 
 state 10
 
-  10) left_command : LEFT _ EOL
-
-  EOL           shift, and go to state 17
-
-
-state 11
-
-  11) right_command : RIGHT _ EOL
+  10) report_command : REPORT _ EOL
 
   EOL           shift, and go to state 18
 
 
-state 12
+state 11
 
-  12) move_command : MOVE _ EOL
+  11) left_command : LEFT _ EOL
 
   EOL           shift, and go to state 19
 
 
+state 12
+
+  12) right_command : RIGHT _ EOL
+
+  EOL           shift, and go to state 20
+
+
 state 13
 
+  13) move_command : MOVE _ EOL
 
-  $end          shift, and go to state 20
+  EOL           shift, and go to state 21
 
 
 state 14
+
+  14) error_command : error _ EOL
+
+  EOL           shift, and go to state 22
+
+
+state 15
+
+
+  $end          shift, and go to state 23
+
+
+state 16
 
    2) commands : command commands _
 
   $default      reduce using rule 2 (commands)
 
 
-state 15
-
-   8) place_command : PLACE NUMBER _ "," NUMBER "," direction EOL
-
-  ","           shift, and go to state 21
-
-
-state 16
-
-   9) report_command : REPORT EOL _
-
-  $default      reduce using rule 9 (report_command)
-
-
 state 17
 
-  10) left_command : LEFT EOL _
+   9) place_command : PLACE NUMBER _ "," NUMBER "," direction EOL
 
-  $default      reduce using rule 10 (left_command)
+  ","           shift, and go to state 24
 
 
 state 18
 
-  11) right_command : RIGHT EOL _
+  10) report_command : REPORT EOL _
 
-  $default      reduce using rule 11 (right_command)
+  $default      reduce using rule 10 (report_command)
 
 
 state 19
 
-  12) move_command : MOVE EOL _
+  11) left_command : LEFT EOL _
 
-  $default      reduce using rule 12 (move_command)
+  $default      reduce using rule 11 (left_command)
 
 
 state 20
+
+  12) right_command : RIGHT EOL _
+
+  $default      reduce using rule 12 (right_command)
+
+
+state 21
+
+  13) move_command : MOVE EOL _
+
+  $default      reduce using rule 13 (move_command)
+
+
+state 22
+
+  14) error_command : error EOL _
+
+  $default      reduce using rule 14 (error_command)
+
+
+state 23
 
 
   $default      accept
 
 
-state 21
-
-   8) place_command : PLACE NUMBER "," _ NUMBER "," direction EOL
-
-  NUMBER        shift, and go to state 22
-
-
-state 22
-
-   8) place_command : PLACE NUMBER "," NUMBER _ "," direction EOL
-
-  ","           shift, and go to state 23
-
-
-state 23
-
-   8) place_command : PLACE NUMBER "," NUMBER "," _ direction EOL
-
-  NORTH         shift, and go to state 25
-  EAST          shift, and go to state 26
-  SOUTH         shift, and go to state 27
-  WEST          shift, and go to state 28
-
-  direction     go to state 24
-
 state 24
 
-   8) place_command : PLACE NUMBER "," NUMBER "," direction _ EOL
+   9) place_command : PLACE NUMBER "," _ NUMBER "," direction EOL
 
-  EOL           shift, and go to state 29
+  NUMBER        shift, and go to state 25
 
 
 state 25
 
-  13) direction : NORTH _
+   9) place_command : PLACE NUMBER "," NUMBER _ "," direction EOL
 
-  $default      reduce using rule 13 (direction)
+  ","           shift, and go to state 26
 
 
 state 26
 
-  14) direction : EAST _
+   9) place_command : PLACE NUMBER "," NUMBER "," _ direction EOL
 
-  $default      reduce using rule 14 (direction)
+  NORTH         shift, and go to state 28
+  EAST          shift, and go to state 29
+  SOUTH         shift, and go to state 30
+  WEST          shift, and go to state 31
 
+  direction     go to state 27
 
 state 27
 
-  15) direction : SOUTH _
+   9) place_command : PLACE NUMBER "," NUMBER "," direction _ EOL
 
-  $default      reduce using rule 15 (direction)
+  EOL           shift, and go to state 32
 
 
 state 28
 
-  16) direction : WEST _
+  15) direction : NORTH _
 
-  $default      reduce using rule 16 (direction)
+  $default      reduce using rule 15 (direction)
 
 
 state 29
 
-   8) place_command : PLACE NUMBER "," NUMBER "," direction EOL _
+  16) direction : EAST _
 
-  $default      reduce using rule 8 (place_command)
+  $default      reduce using rule 16 (direction)
+
+
+state 30
+
+  17) direction : SOUTH _
+
+  $default      reduce using rule 17 (direction)
+
+
+state 31
+
+  18) direction : WEST _
+
+  $default      reduce using rule 18 (direction)
+
+
+state 32
+
+   9) place_command : PLACE NUMBER "," NUMBER "," direction EOL _
+
+  $default      reduce using rule 9 (place_command)
 

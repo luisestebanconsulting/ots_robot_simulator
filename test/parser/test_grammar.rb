@@ -13,6 +13,7 @@ require File.join(File.expand_path(File.dirname(__FILE__)),'..','..','lib','robo
 
 #Simulator.debug
 
+
 class DummyTokenizer
   
   def initialize(tokens)
@@ -54,7 +55,7 @@ describe Tokenizer do
         [:RIGHT,  "RIGHT" ], [:EOL, "\n"]
       ]
       
-      @mock_target.expects(:place_command).with([3,4],:east)
+      @mock_target.expects(:place_command).with(Vector[3,4],:east)
       @mock_target.expects(:report_command)
       @mock_target.expects(:move_command)
       @mock_target.expects(:left_command)
