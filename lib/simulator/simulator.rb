@@ -165,6 +165,16 @@ public
     }
     
     
+    # -- Table Size --
+    option_parser.on('-t', '--table=SIZE', Integer,
+      'Set table size'
+    ){|size|
+      if size >= 0
+        @table_size = size
+      end
+    }
+    
+    
     # -- Debug Mode --
     option_parser.on('-D',
       'Equivalent to -l -sdebug'
@@ -222,7 +232,8 @@ public
       target:           self,
       debug_grammar:    @debug_grammar
     
-    @table = Table.new
+    @table = Table.new \
+      size:   @table_size
     
     @robot = Robot.new
     
