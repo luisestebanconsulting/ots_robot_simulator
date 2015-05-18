@@ -36,6 +36,13 @@ begin
       #when /^\s*$/
       
       # @todo         Also, consider adding expected error messages
+      #               E.g.
+      #               ======
+      #               input
+      #               ------
+      #               output
+      #               !!!!!!
+      #               errors
       
       else
         file && file.print(line)
