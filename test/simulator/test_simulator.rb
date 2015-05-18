@@ -26,4 +26,14 @@ describe Simulator do
     end
   end
   
+  describe 'Processes normal input' do
+    it 'Tries to run on normal input' do
+      out, err = capture_io do
+        @simulator = Simulator.new [File.join(ASSETS_DIR,'test1')]
+      end
+      out.must_equal "3,4,EAST\n"
+      err.must_equal ''
+    end
+  end
+  
 end

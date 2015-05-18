@@ -12,6 +12,11 @@
 
 require 'racc/parser'
 
+COMMANDS    = %w{PLACE REPORT LEFT RIGHT MOVE}
+DIRECTIONS  = %w{NORTH EAST SOUTH WEST}
+
+KEYWORDS    = (COMMANDS + DIRECTIONS).sort
+
 class Tokenizer
 
 macro
@@ -129,6 +134,11 @@ inner
     @interactive = true
     @lineno      = 1
     @state       = nil
+    
+    Readline.completion_append_character = " "
+    Readline.completion_proc             = ->(s){
+      KEYWORDS.grep(/^#{Regexp.escape(s)}/)
+    }
   end
   
   
