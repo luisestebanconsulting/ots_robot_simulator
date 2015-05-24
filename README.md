@@ -1,6 +1,9 @@
 # (Off-The-Shelf) Toy Robot Simulator
 _Software Engineering Presentation_
 
+![Toy Robot Simulator](./design/toy_robot_simulator.png)
+![Toy Robot Simulator](../design/toy_robot_simulator.png)
+
 > This is a software engineering project presenting various software engineering processes and concepts
 that would be applied to a large project, even though the project is small.  
 >  
@@ -189,10 +192,16 @@ Commands are issued to the simulator according to the following railroad diagram
 
 Most recent work was:
 
-* Add entities: Robot and Table, and completed Simulator (see doc/Requirements.md)
+* Added title/splash image (see doc/Requirements.md)
 
 
 ```
+*   39eeb8e 2015-05-18 | Merge pull request #2 from luisestebanconsulting/issue/1/table_size (HEAD, origin/master, origin/HEAD, master) [Luis Esteban]
+|\  
+| * 4730b57 2015-05-18 | Issue #1 (SOLVED): Added -t command line option to set table size (origin/issue/1/table_size) [Luis Esteban]
+| * 39fc324 2015-05-18 | Added Readline completion to Parser [Luis Esteban]
+|/  
+* 98c34ed 2015-05-13 | Add entities: Robot and Table, and completed Simulator (see doc/Requirements.md) [Luis Esteban]
 * 4b780b5 2015-05-11 | Setup lexical analysis and parsing with interactive/non-interactive input (see doc/Requirements.md) [Luis Esteban]
 * badcb9c 2015-05-10 | Setup I/O handling, including logging (see doc/Requirements.md) [Luis Esteban]
 * 4165a31 2015-05-09 | Base infrastructure (Launch file and Simulator) from initial client brief (see doc/Requirements.md) [Luis Esteban]

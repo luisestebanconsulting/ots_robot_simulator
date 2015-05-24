@@ -756,14 +756,14 @@ but it is possible to have more.</p>
       <pre class="lines">
 
 
-345
-346
-347
-348
-349</pre>
+356
+357
+358
+359
+360</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 345</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 356</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span>
   <span class='cvar'>@@logger</span>          <span class='op'>=</span> <span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='gvar'>$stderr</span>
@@ -821,16 +821,16 @@ but it is possible to have more.</p>
       <pre class="lines">
 
 
-356
-357
-358
-359
-360
-361
-362</pre>
+367
+368
+369
+370
+371
+372
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 356</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 367</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_logging?'>logging?</span>
@@ -929,13 +929,13 @@ but it is possible to have more.</p>
       <pre class="lines">
 
 
-314
-315
-316
-317</pre>
+325
+326
+327
+328</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 314</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 325</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_level'>level</span> <span class='op'>=</span> <span class='symbol'>:notice</span><span class='rparen'>)</span>
   <span class='cvar'>@@syslog</span> <span class='op'>&amp;&amp;</span> <span class='cvar'>@@syslog</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='const'>SYSLOG_LEVELS</span><span class='lbracket'>[</span><span class='id identifier rubyid_level'>level</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='symbol'>:notice</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
@@ -999,12 +999,12 @@ being reported</p>
       <pre class="lines">
 
 
-337
-338
-339</pre>
+348
+349
+350</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 337</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 348</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_logging?'>logging?</span>
   <span class='cvar'>@@syslog</span> <span class='op'>||</span> <span class='cvar'>@@logger</span>
@@ -1193,7 +1193,17 @@ being reported</p>
 210
 211
 212
-213</pre>
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 86</span>
@@ -1280,6 +1290,16 @@ being reported</p>
   <span class='rbrace'>}</span>
   
   
+  <span class='comment'># -- Table Size --
+</span>  <span class='id identifier rubyid_option_parser'>option_parser</span><span class='period'>.</span><span class='id identifier rubyid_on'>on</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-t</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--table=SIZE</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>Integer</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Set table size</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_size'>size</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;=</span> <span class='int'>0</span>
+      <span class='ivar'>@table_size</span> <span class='op'>=</span> <span class='id identifier rubyid_size'>size</span>
+    <span class='kw'>end</span>
+  <span class='rbrace'>}</span>
+  
+  
   <span class='comment'># -- Debug Mode --
 </span>  <span class='id identifier rubyid_option_parser'>option_parser</span><span class='period'>.</span><span class='id identifier rubyid_on'>on</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-D</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
     <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Equivalent to -l -sdebug</span><span class='tstring_end'>&#39;</span></span>
@@ -1357,12 +1377,12 @@ being reported</p>
       <pre class="lines">
 
 
-284
-285
-286</pre>
+295
+296
+297</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 284</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 295</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_left_command'>left_command</span>
   <span class='ivar'>@robot</span><span class='period'>.</span><span class='id identifier rubyid_left'>left</span>
@@ -1414,12 +1434,12 @@ Also, the instance method calls the class method <span class='object_link'><a hr
       <pre class="lines">
 
 
-326
-327
-328</pre>
+337
+338
+339</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 326</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 337</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1455,12 +1475,12 @@ Also, the instance method calls the class method <span class='object_link'><a hr
       <pre class="lines">
 
 
-300
-301
-302</pre>
+311
+312
+313</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 300</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 311</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_command'>move_command</span>
   <span class='ivar'>@robot</span><span class='period'>.</span><span class='id identifier rubyid_move'>move</span>
@@ -1532,15 +1552,15 @@ Also, the instance method calls the class method <span class='object_link'><a hr
       <pre class="lines">
 
 
-265
-266
-267
-268
-269
-270</pre>
+276
+277
+278
+279
+280
+281</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 276</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_place_command'>place_command</span><span class='lparen'>(</span><span class='id identifier rubyid_location'>location</span><span class='comma'>,</span> <span class='id identifier rubyid_direction'>direction</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@table</span><span class='period'>.</span><span class='id identifier rubyid_exists_at?'>exists_at?</span><span class='lparen'>(</span><span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span>
@@ -1579,12 +1599,12 @@ Also, the instance method calls the class method <span class='object_link'><a hr
       <pre class="lines">
 
 
-276
-277
-278</pre>
+287
+288
+289</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 276</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 287</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_report_command'>report_command</span>
   <span class='ivar'>@robot</span><span class='period'>.</span><span class='id identifier rubyid_report'>report</span>
@@ -1620,12 +1640,12 @@ Also, the instance method calls the class method <span class='object_link'><a hr
       <pre class="lines">
 
 
-292
-293
-294</pre>
+303
+304
+305</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 292</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 303</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_right_command'>right_command</span>
   <span class='ivar'>@robot</span><span class='period'>.</span><span class='id identifier rubyid_right'>right</span>
@@ -1661,22 +1681,23 @@ Also, the instance method calls the class method <span class='object_link'><a hr
       <pre class="lines">
 
 
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
 228
 229
-230</pre>
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_setup'>setup</span>
   <span class='id identifier rubyid_log'>log</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Setting up simulation</span><span class='tstring_end'>&#39;</span></span>
@@ -1685,7 +1706,8 @@ Also, the instance method calls the class method <span class='object_link'><a hr
     <span class='label'>target:</span>           <span class='kw'>self</span><span class='comma'>,</span>
     <span class='label'>debug_grammar:</span>    <span class='ivar'>@debug_grammar</span>
   
-  <span class='ivar'>@table</span> <span class='op'>=</span> <span class='const'>Table</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@table</span> <span class='op'>=</span> <span class='const'>Table</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> \
+    <span class='label'>size:</span>   <span class='ivar'>@table_size</span>
   
   <span class='ivar'>@robot</span> <span class='op'>=</span> <span class='const'>Robot</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   
@@ -1731,12 +1753,12 @@ again.</p>
       <pre class="lines">
 
 
-238
-239
-240</pre>
+249
+250
+251</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 238</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 249</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shutdown'>shutdown</span>
   <span class='id identifier rubyid_log'>log</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Shutting down simulation</span><span class='tstring_end'>&#39;</span></span>
@@ -1772,14 +1794,14 @@ again.</p>
       <pre class="lines">
 
 
-245
-246
-247
-248
-249</pre>
+256
+257
+258
+259
+260</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 256</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_start'>start</span>
   <span class='id identifier rubyid_log'>log</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Starting simulation</span><span class='tstring_end'>&#39;</span></span>
@@ -1817,13 +1839,13 @@ again.</p>
       <pre class="lines">
 
 
-254
-255
-256
-257</pre>
+265
+266
+267
+268</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'lib/simulator/simulator.rb', line 265</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stop'>stop</span>
   <span class='id identifier rubyid_log'>log</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Stopping simulation</span><span class='tstring_end'>&#39;</span></span>
@@ -1839,7 +1861,7 @@ again.</p>
 </div>
 
     <div id="footer">
-  Generated on Wed May 13 02:26:43 2015 by
+  Generated on Sun May 24 16:02:37 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.0.0).
 </div>
